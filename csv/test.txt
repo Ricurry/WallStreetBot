@@ -1,0 +1,44 @@
+import pandas as pd 
+import csv
+
+from textblob import TextBlob 
+from textblob.classifiers import NaiveBayesClassifier 
+
+WSBWords =  [
+    ('Gain Porn', 'pos'),
+    ('YOLO', 'pos' ), #Yolo is the worst fucking thing you can see in a WSB post.
+    ('Loss Porn', 'neg'),
+    ('Stonks', 'pos'),
+    ('HODL',  'neu'),
+    ('To The Moon', 'pos'),
+    ('Apes Together Strong', 'neg'),
+    ('Bears', 'neg' ),
+    ('Buy High Sell Low', 'neg'),
+    ('Buy The Dip', 'pos'),
+    ('Paper Hands', 'neg'),
+    ('We Like the Stock', 'neg'),
+    ('Pump and Dump', 'neg'),
+    ('Smooth brain', 'neg'),
+    ('Under The Radar', 'neg'),
+    ('Shorts', 'pos'),
+    ('PUTS', 'neu'),
+    ('Rich', 'pos'),
+]
+cl = NaiveBayesClassifier(WSBWords) 
+
+
+sym = pd.read_csv('csv/symbol.csv')
+symlist = list(sym['Symbol'])
+symlen = len(symlist)
+
+
+post = pd.read_csv('csv/Posts.csv')
+postlist = list(post['Posts By WSB'])
+postlen = len(postlist)
+
+i = 0
+while i < postlen:
+    print(i)
+    print(cl.classify(post[i]))
+    i+=1
+    
